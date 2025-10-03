@@ -41,5 +41,6 @@ jobs:
         black --check .
 
     - name: Run tests
+      #autorun pytest
       run: |
-        python -m crypto_engine.tests.run_tests --verbose
+        pytest -v
