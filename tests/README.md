@@ -224,34 +224,54 @@ If adding a new area of functionality:
 Example workflow configuration:
 
 ```yaml
-name: Run Tests
+# This is the name of the workflow that will be displayed on GitHub.
+name: Python Application CI
 
-on: [push, pull_request]
+# This section defines the triggers for the workflow.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     
+    # This strategy runs the job on multiple versions of Python.
+    # It ensures your code is compatible across different environments.
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.10", "3.12"]
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
-    
+        python-version: ${{ matrix.python-version }}
+
     - name: Install dependencies
       run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements-dev.txt
+        #install project
         pip install -e .
-        pip install pytest pytest-cov
-    
+
+    - name: Lint with ruff and check formatting with black
+      run: |
+        # Find style issues and potential errors.
+        ruff check .
+        # Verify that code formatting is correct without changing files.
+        black --check .
+
     - name: Run tests
+      #autorun pytest
       run: |
-        python -m crypto_engine.tests.run_tests --fast
-    
-    - name: Run with coverage
-      run: |
-        pytest crypto_engine/tests/ --cov=crypto_engine --cov-report=xml
+        pytest -v
 ```
 
 ### Coverage Reports
