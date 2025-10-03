@@ -9,6 +9,12 @@
 
 This repository contains a high-performance core engine that provides all the security features necessary to store user data in a format that is inaccessible even to the server owner. It is designed from the ground up to be secure, flexible, and easy to integrate into modern asynchronous Python applications.
 
+### ⚠️ Important Note on Project Status
+
+> This project was created for educational and demonstrational purposes. While designed with modern security practices in mind, it has **not undergone a formal, independent security audit.**
+>
+> Please do not use it in production environments or with sensitive user data without conducting your own thorough audit. The project is well-suited for academic, research, or personal non-critical projects. Feedback and contributions are welcome!
+
 ## 🚀 Key Features
 
 - **Zero-Knowledge Architecture:** All encryption and decryption logic is designed to run on the client-side (e.g., within a bot's logic). Master passwords and derived keys are never transmitted or stored server-side, ensuring only the end-user can access their data.
