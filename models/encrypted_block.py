@@ -21,29 +21,30 @@ from cryptography.hazmat.primitives import constant_time
 class EncryptedBlock:
     """
     Container for encrypted data blocks with comprehensive metadata.
-    
+
     This class represents a complete encrypted unit that contains all
     necessary information for decryption and verification.
     """
-    id: str                           # Unique block identifier
-    encrypted_data: bytes            # Encrypted payload
-    nonce: bytes                     # AES-GCM nonce
-    tag: bytes                       # Authentication tag
-    salt: bytes                      # Block-specific salt
-    metadata: Dict[str, Any]         # Unencrypted metadata
-    timestamp: str                   # ISO format timestamp
-    version: str = "2.0"             # Engine version
-    checksum: Optional[str] = None   # Optional integrity checksum
-    
+
+    id: str  # Unique block identifier
+    encrypted_data: bytes  # Encrypted payload
+    nonce: bytes  # AES-GCM nonce
+    tag: bytes  # Authentication tag
+    salt: bytes  # Block-specific salt
+    metadata: Dict[str, Any]  # Unencrypted metadata
+    timestamp: str  # ISO format timestamp
+    version: str = "2.0"  # Engine version
+    checksum: Optional[str] = None  # Optional integrity checksum
+
     def __post_init__(self):
         """Calculate checksum after initialization."""
         if self.checksum is None:
             self.checksum = self._calculate_checksum()
-    
+
     def _calculate_checksum(self) -> str:
         """
         Calculate SHA-256 checksum of encrypted data for integrity verification.
-        
+
         Returns:
             Hexadecimal checksum string
         """
@@ -53,23 +54,22 @@ class EncryptedBlock:
         hasher.update(self.tag)
         hasher.update(self.salt)
         return hasher.hexdigest()
-    
+
     def verify_integrity(self) -> bool:
         """
         Verify block integrity using checksum.
-        
+
         Returns:
             True if integrity check passes
         """
         return constant_time.bytes_eq(
-            self.checksum.encode(),
-            self._calculate_checksum().encode()
+            self.checksum.encode(), self._calculate_checksum().encode()
         )
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """
         Convert to dictionary for serialization.
-        
+
         Returns:
             Dictionary representation suitable for JSON serialization
         """
@@ -82,20 +82,20 @@ class EncryptedBlock:
             "metadata": self.metadata,
             "timestamp": self.timestamp,
             "version": self.version,
-            "checksum": self.checksum
+            "checksum": self.checksum,
         }
-    
+
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'EncryptedBlock':
+    def from_dict(cls, data: Dict[str, Any]) -> "EncryptedBlock":
         """
         Create instance from dictionary.
-        
+
         Args:
             data: Dictionary containing block data
-            
+
         Returns:
             EncryptedBlock instance
-            
+
         Raises:
             ValueError: If dictionary format is invalid
         """
@@ -109,7 +109,7 @@ class EncryptedBlock:
                 metadata=data["metadata"],
                 timestamp=data["timestamp"],
                 version=data.get("version", "2.0"),
-                checksum=data.get("checksum")
+                checksum=data.get("checksum"),
             )
         except (KeyError, ValueError) as e:
             raise ValueError(f"Invalid encrypted block format: {e}")
