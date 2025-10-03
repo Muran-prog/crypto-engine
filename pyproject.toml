@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto-engine"
+version = "2.0"
+authors = [
+    { name="Muran-prog", email="muran_prog@gmail.com" },
+]
+description = "A high-performance, zero-knowledge cryptographic engine for password managers."
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "cryptography>=43.0.0",
+]
