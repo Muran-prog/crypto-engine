@@ -37,7 +37,7 @@ graph TD
     end
 
     subgraph "Crypto Engine (This Repository)"
-        B --> C[🔐 High-Level API (PasswordManagerCrypto)];
+        B --> C["🔐 High-Level API (PasswordManagerCrypto)"];
         C --> D[⚙️ Core Engine (AsyncCryptoEngine)];
         D -- Manages State & Orchestrates --> E(🔧 Crypto Operations);
         E -- Uses --> F[🛡️ Cryptography Primitives (AES, Scrypt)];
