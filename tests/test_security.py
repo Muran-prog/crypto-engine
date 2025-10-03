@@ -48,7 +48,7 @@ class TestSecureMemory(unittest.TestCase):
         """Test secure_memory_context context manager."""
         # Should not raise any exceptions
         with secure_memory_context():
-            sensitive = b"test_data"
+            _ = b"test_data"
             # Context ensures garbage collection
 
 

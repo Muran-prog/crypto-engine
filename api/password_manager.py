@@ -392,7 +392,7 @@ class PasswordManagerCrypto:
             clean_data = {k: v for k, v in entry_data.items() if not k.startswith('_')}
             
             try:
-                encrypted_block = await self.store_entry(clean_data)
+                _ = await self.store_entry(clean_data)
                 imported_count += 1
             except Exception as e:
                 logger.warning(f"Failed to import entry: {str(e)}")

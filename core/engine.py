@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 
 from ..config.crypto_config import CryptoConfig
 from ..models.enums import ExportFormat
+from ..models.enums import KeyDerivationMethod
 from ..models.encrypted_block import EncryptedBlock
 from ..models.account_info import AccountInfo
 from .secure_memory import SecureBytes 
@@ -24,7 +25,7 @@ from ..operations.key_derivation import derive_master_key
 from ..operations.authentication import authenticate_user
 from ..operations.encryption import encrypt_block, decrypt_block
 from ..operations.data_export import export_data, import_encrypted_backup
-from ..exceptions import AuthenticationError, CryptoError, AccountError, ExportError
+from ..exceptions import AuthenticationError, CryptoError, AccountError
 
 logger = logging.getLogger(__name__)
 
